@@ -2,14 +2,15 @@
 -- If the database does not exist yet, create it first:
 -- CREATE DATABASE "PSgvecors";
 
-CREATE TABLE IF NOT EXISTS users (
-    user_id BIGSERIAL PRIMARY KEY,
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[users]') AND type in (N'U'))
+CREATE TABLE dbo.users (
+    user_id BIGINT IDENTITY(1,1) PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     full_name VARCHAR(255) NOT NULL,
-    password_hash TEXT,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    password_hash TEXT NULL,
+    is_active BIT DEFAULT 1,
+    created_at DATETIME DEFAULT GETDATE(),
+    updated_at DATETIME DEFAULT GETDATE()
 );
 
 CREATE TABLE IF NOT EXISTS companies (
@@ -91,4 +92,4 @@ CREATE INDEX IF NOT EXISTS idx_applications_user_id ON applications (user_id);
 CREATE INDEX IF NOT EXISTS idx_applications_job_id ON applications (job_id);
 CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications (user_id);
 
-
+select * from users;
