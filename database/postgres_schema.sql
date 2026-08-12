@@ -1,6 +1,6 @@
-CREATE DATABASE jobsentinel;
-
-\c jobsentinel;
+-- Run this script against the existing database named PSgvecors.
+-- If the database does not exist yet, create it first:
+-- CREATE DATABASE "PSgvecors";
 
 CREATE TABLE IF NOT EXISTS users (
     user_id BIGSERIAL PRIMARY KEY,
@@ -92,4 +92,3 @@ CREATE INDEX IF NOT EXISTS idx_applications_job_id ON applications (job_id);
 CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications (user_id);
 
 
-select * from  users 
