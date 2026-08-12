@@ -136,7 +136,7 @@ def test_crud_operations():
             all_pass = False
             
     except Exception as e:
-        print(f"    [FAIL] CRUD operation failed: {e}"))
+        print(f"    [FAIL] CRUD operation failed: {e}")
         all_pass = False
     finally:
         db.close()
@@ -173,7 +173,7 @@ def test_relationships():
         )
         db.add(test_job)
         db.commit()
-        print(f"  [PASS] Job created: {test_job.job_id} (linked to company {test_job.company_id})"))
+        print(f"  [PASS] Job created: {test_job.job_id} (linked to company {test_job.company_id})")
         
         # Verify relationship
         company = db.query(Company).filter(Company.company_id == test_company.company_id).first()
@@ -189,7 +189,7 @@ def test_relationships():
         db.commit()
         
     except Exception as e:
-        print(f"  [FAIL] Relationship test failed: {e}"))
+        print(f"  [FAIL] Relationship test failed: {e}")
         all_pass = False
     finally:
         db.close()
@@ -235,7 +235,7 @@ def test_data_integrity():
         db.commit()
         
     except Exception as e:
-        print(f"  [FAIL] Data integrity test failed: {e}"))
+        print(f"  [FAIL] Data integrity test failed: {e}")
         all_pass = False
     finally:
         db.close()
