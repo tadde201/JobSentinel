@@ -1,0 +1,40 @@
+"""
+Query Examples for JobSentinel
+Copy and paste these queries into the query tool
+"""
+
+# Example 1: Count all users
+# SELECT COUNT(*) as total_users FROM users;
+
+# Example 2: List all companies
+# SELECT company_id, name, website, industry FROM companies LIMIT 10;
+
+# Example 3: List all jobs
+# SELECT job_id, title, url, status FROM jobs LIMIT 10;
+
+# Example 4: Find all active jobs
+# SELECT job_id, title, status FROM jobs WHERE status = 'active';
+
+# Example 5: Jobs by company
+# SELECT c.name, COUNT(j.job_id) as total_jobs 
+# FROM companies c 
+# LEFT JOIN jobs j ON c.company_id = j.company_id 
+# GROUP BY c.company_id, c.name;
+
+# Example 6: User registrations
+# SELECT user_id, email, full_name, created_at FROM users ORDER BY created_at DESC;
+
+# Example 7: Applications by user
+# SELECT u.full_name, COUNT(a.application_id) as applications 
+# FROM users u 
+# LEFT JOIN applications a ON u.user_id = a.user_id 
+# GROUP BY u.user_id, u.full_name;
+
+# Example 8: Job sources
+# SELECT source_id, name, type, is_active FROM job_sources;
+
+# Example 9: Notifications
+# SELECT notification_id, user_id, title, is_read FROM notifications LIMIT 10;
+
+# Example 10: Application events
+# SELECT event_id, application_id, event_type FROM application_events LIMIT 10;
