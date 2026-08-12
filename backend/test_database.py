@@ -21,10 +21,10 @@ def test_connection():
         with engine.connect() as conn:
             result = conn.execute(text("SELECT 1 as connection_test"))
             value = result.scalar()
-            print(f"✓ Connection successful. Result: {value}")
+            print(f"[PASS] Connection successful. Result: {value}")
             return True
     except Exception as e:
-        print(f"✗ Connection failed: {e}")
+        print(f"[FAIL] Connection failed: {e}")
         return False
 
 def test_tables():
@@ -42,8 +42,8 @@ def test_tables():
     all_exist = True
     for table in required_tables:
         exists = table in tables
-        status = "✓" if exists else "✗"
-        print(f"  {status} {table}")
+        status = "PASS" if exists else "FAIL"
+        print(f"  [{status}] {table}")
         if not exists:
             all_exist = False
     
@@ -72,8 +72,8 @@ def test_columns():
         
         for col in required_cols:
             exists = col in existing_cols
-            status = "✓" if exists else "✗"
-            print(f"    {status} {col}")
+            status = "PASS" if exists else "FAIL"
+            print(f"    [{status}] {col}")
             if not exists:
                 all_pass = False
     
@@ -101,16 +101,16 @@ def test_crud_operations():
         )
         db.add(test_user)
         db.commit()
-        print(f"    ✓ User created with ID: {test_user.user_id}")
+        print(f"    [PASS] User created with ID: {test_user.user_id}")
         user_id = test_user.user_id
         
         # READ
         print("\n  READ (Query):")
         retrieved_user = db.query(User).filter(User.user_id == user_id).first()
         if retrieved_user:
-            print(f"    ✓ User retrieved: {retrieved_user.email}")
+            print(f"    [PASS] User retrieved: {retrieved_user.email}")
         else:
-            print(f"    ✗ User not found")
+            print(f"    [FAIL] User not found")
             all_pass = False
         
         # UPDATE
@@ -119,9 +119,9 @@ def test_crud_operations():
         db.commit()
         updated_user = db.query(User).filter(User.user_id == user_id).first()
         if updated_user.full_name == "Updated Test User":
-            print(f"    ✓ User updated: {updated_user.full_name}")
+            print(f"    [PASS] User updated: {updated_user.full_name}")
         else:
-            print(f"    ✗ Update failed")
+            print(f"    [FAIL] Update failed")
             all_pass = False
         
         # DELETE
@@ -130,13 +130,13 @@ def test_crud_operations():
         db.commit()
         deleted_user = db.query(User).filter(User.user_id == user_id).first()
         if deleted_user is None:
-            print(f"    ✓ User deleted successfully")
+            print(f"    [PASS] User deleted successfully")
         else:
-            print(f"    ✗ Delete failed")
+            print(f"    [FAIL] Delete failed")
             all_pass = False
             
     except Exception as e:
-        print(f"    ✗ CRUD operation failed: {e}")
+        print(f"    [FAIL] CRUD operation failed: {e}"))
         all_pass = False
     finally:
         db.close()
@@ -162,7 +162,7 @@ def test_relationships():
         )
         db.add(test_company)
         db.commit()
-        print(f"  ✓ Company created: {test_company.company_id}")
+        print(f"  [PASS] Company created: {test_company.company_id}")
         
         # Create test job
         test_job = Job(
@@ -173,14 +173,14 @@ def test_relationships():
         )
         db.add(test_job)
         db.commit()
-        print(f"  ✓ Job created: {test_job.job_id} (linked to company {test_job.company_id})")
+        print(f"  [PASS] Job created: {test_job.job_id} (linked to company {test_job.company_id})"))
         
         # Verify relationship
         company = db.query(Company).filter(Company.company_id == test_company.company_id).first()
         if company.jobs:
-            print(f"  ✓ Relationship verified: Company has {len(company.jobs)} job(s)")
+            print(f"  [PASS] Relationship verified: Company has {len(company.jobs)} job(s)")
         else:
-            print(f"  ✗ Relationship not working")
+            print(f"  [FAIL] Relationship not working")
             all_pass = False
         
         # Cleanup
@@ -189,7 +189,7 @@ def test_relationships():
         db.commit()
         
     except Exception as e:
-        print(f"  ✗ Relationship test failed: {e}")
+        print(f"  [FAIL] Relationship test failed: {e}"))
         all_pass = False
     finally:
         db.close()
@@ -224,10 +224,10 @@ def test_data_integrity():
         db.add(user2)
         try:
             db.commit()
-            print(f"    ✗ Unique constraint not enforced")
+            print(f"    [FAIL] Unique constraint not enforced")
             all_pass = False
         except Exception as e:
-            print(f"    ✓ Unique constraint working (duplicate rejected)")
+            print(f"    [PASS] Unique constraint working (duplicate rejected)")
             db.rollback()
         
         # Cleanup
@@ -235,7 +235,7 @@ def test_data_integrity():
         db.commit()
         
     except Exception as e:
-        print(f"  ✗ Data integrity test failed: {e}")
+        print(f"  [FAIL] Data integrity test failed: {e}"))
         all_pass = False
     finally:
         db.close()
@@ -265,8 +265,8 @@ def run_all_tests():
     total = len(results)
     
     for test_name, passed_test in results.items():
-        status = "✓ PASS" if passed_test else "✗ FAIL"
-        print(f"  {status}: {test_name}")
+        status = "PASS" if passed_test else "FAIL"
+        print(f"  [{status}] {test_name}")
     
     print(f"\nTotal: {passed}/{total} tests passed")
     print("="*60 + "\n")
