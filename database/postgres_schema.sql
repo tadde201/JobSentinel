@@ -90,3 +90,6 @@ CREATE INDEX IF NOT EXISTS idx_jobs_external_job_id ON jobs (external_job_id);
 CREATE INDEX IF NOT EXISTS idx_applications_user_id ON applications (user_id);
 CREATE INDEX IF NOT EXISTS idx_applications_job_id ON applications (job_id);
 CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications (user_id);
+
+
+select * from  users 
